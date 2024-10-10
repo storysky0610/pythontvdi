@@ -11,7 +11,6 @@ with open('pythontvdi\lesson2\student.csv',"r",encoding="utf-8") as file:
         if int(i['age']) > 25:
             print(i)
             lista.append(i)
-    str(lista)
 with open('pythontvdi\lesson2\date2.csv',"w",encoding="utf-8") as file:
     wwww = csv.writer(file)
     wwww.writerow(lista)
