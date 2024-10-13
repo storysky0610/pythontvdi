@@ -5,14 +5,14 @@ for i in range(360):
     image = Image.open(r'C:\Users\a2778\GitHub\pythontvdi\xan\X1.jpg')
 
     # 開啟圓形圖檔
-    circle_image = Image.open(r'C:\Users\a2778\GitHub\pythontvdi\xan\X2.png')
+    circle_image = Image.open(r'C:\Users\a2778\GitHub\pythontvdi\xan\X3.png')
 
     # 設定圓形的中心位置
     circle_center = (175, 170)  # 圓心座標
 
     # 旋轉圓形圖檔
     angle = i  # 旋轉角度 (度數)
-    rotated_circle = circle_image.rotate(angle, expand=True)  # 旋轉圓形並保持圖片大小
+    rotated_circle = circle_image.rotate(angle)  # 旋轉圓形並保持圖片大小expand=True
 
     # 計算圓形旋轉後的位置，將其貼回原圖
     paste_position = (circle_center[0] - rotated_circle.width // 2, 
