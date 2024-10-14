@@ -17,4 +17,4 @@ with open('pythontvdi\lesson2\date2.csv',"w",encoding="utf-8") as file:
     #  wwww.writerow(item)
     wwww = csv.writer(file)
     for i in lista:
-        wwww.writerow([i])
+        wwww.writerow({i})
