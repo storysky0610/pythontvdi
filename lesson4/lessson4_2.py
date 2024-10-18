@@ -1,6 +1,12 @@
 import tkinter as tk
+
+class window(tk.Tk):
+    def __init__(self,**kwargs):
+        super().__init__(**kwargs)
+
+
 def main():
-    root = tk.Tk()
+    root = window()
     print(type(root))
     root.title('這是我的第一個視窗')
     root.geometry('800x300')
