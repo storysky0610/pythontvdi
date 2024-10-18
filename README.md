@@ -4,3 +4,7 @@
 ### 上課連結
 meet.google.com/wgt-caxa-sdk
 
+[text](requirements.txt)
+
+# 一次性安裝檔案內的套件
+pip install -r requirements.txt

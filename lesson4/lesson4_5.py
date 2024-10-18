@@ -2,10 +2,10 @@ import tkinter as tk
 from tkinter import ttk
 from ttkthemes import ThemedTk
 from PIL import Image, ImageTk
-class Window(tk.Tk):
-    def __init__(self,**kwargs):
+class Window(ThemedTk):
+    def __init__(self,*args,**kwargs):
         
-        super().__init__(**kwargs)
+        super().__init__(*args,**kwargs)
         self.title('使用ttk的套件')#全域變數
         self.geometry('400x300')
         style = ttk.Style(self)
@@ -30,7 +30,7 @@ class Window(tk.Tk):
         btn1.pack(padx=10,pady=10,ipadx=20,ipady=40)
 
 def main():
-    window = Window()
+    window = Window(theme="arc")
     window.mainloop()
 if __name__ == "__main__":
     main()
