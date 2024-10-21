@@ -4,7 +4,7 @@ from tkinter import ttk
 class Window(ThemedTk):
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
-        self.title('使用ttk的套件')
+        self.title('聽說用字體大小做')
         style = ttk.Style(self)
 
         topFrame = ttk.Frame(self,borderwidth=3,relief='groove')
@@ -23,57 +23,68 @@ class Window(ThemedTk):
 
         btn3.pack(side='left',expand=True,fill='x',padx=10)
 
+        ###############################################################
+        style.configure('Main1.TButton',font=('Aeial',45))
+        style.configure('Main2.TButton',font=('Aeial',26))
+        style.configure('Main3.TButton',font=('Aeial',25))
+        style.configure('Main4.TButton',font=('Aeial',38))
+        style.configure('Main5.TButton',font=('Aeial',16))
+        style.configure('Main6.TButton',font=('Aeial',38))
+        style.configure('Main7.TButton',font=('Aeial',33))
+        style.configure('Main8.TButton',font=('Aeial',30))
+        style.configure('Main9.TButton',font=('Aeial',34))
+
         bottomFrame1 = ttk.Frame(self,borderwidth=3,relief='groove')
 
         bottomFrame1.pack(padx=10,pady=10,side='left')
+        x=3
+        
+        btn4 = ttk.Button(bottomFrame1,text="4",style = 'Main1.TButton',width=x)
 
-        btn4 = ttk.Button(bottomFrame1,text="按鈕1")
+        btn4.pack(fill='x',padx=10,pady=(12,0))
 
-        btn4.pack(expand=True,fill='x',padx=10)
+        btn5 = ttk.Button(bottomFrame1,text="5",style = 'Main2.TButton',width=x)
 
-        btn5 = ttk.Button(bottomFrame1,text="按鈕1")
+        btn5.pack(fill='x',padx=10,pady=(6,0))
 
-        btn5.pack(expand=True,fill='x',padx=10,side='left')
+        btn6 = ttk.Button(bottomFrame1,text="6",style = 'Main3.TButton',width=x)
 
-        btn6 = ttk.Button(bottomFrame1,text="按鈕1")
-
-        btn6.pack(expand=True,fill='x',padx=10)
+        btn6.pack(fill='x',padx=10,pady=(8,12))
 
         bottomFrame2 = ttk.Frame(self,borderwidth=3,relief='groove')
 
         bottomFrame2.pack(padx=10,pady=10,side='left')
 
-        btn4 = ttk.Button(bottomFrame2,text="按鈕1")
+        btn7 = ttk.Button(bottomFrame2,text="7",style = 'Main4.TButton',width=x)
 
-        btn4.pack(expand=True,fill='x',padx=10)
+        btn7.pack(fill='x',padx=10,pady=(12,0))
 
-        btn5 = ttk.Button(bottomFrame2,text="按鈕1")
+        btn8 = ttk.Button(bottomFrame2,text="8",style = 'Main5.TButton',width=x)
 
-        btn5.pack(expand=True,fill='x',padx=10)
+        btn8.pack(fill='x',padx=10,pady=(14,0))
 
-        btn6 = ttk.Button(bottomFrame2,text="按鈕1")
+        btn9 = ttk.Button(bottomFrame2,text="9",style = 'Main6.TButton',width=x)
 
-        btn6.pack(expand=True,fill='x',padx=10)
+        btn9.pack(fill='x',padx=10,pady=(8,12))
 
 
         bottomFrame3 = ttk.Frame(self,borderwidth=3,relief='groove')
 
         bottomFrame3.pack(padx=10,pady=10)
 
-        btn4 = ttk.Button(bottomFrame3,text="按鈕1")
+        btn10 = ttk.Button(bottomFrame3,text="10",style = 'Main7.TButton',width=x)
 
-        btn4.pack(expand=True,fill='x',padx=10)
+        btn10.pack(fill='x',padx=10,pady=(0,0))
 
-        btn5 = ttk.Button(bottomFrame3,text="按鈕1")
+        btn11 = ttk.Button(bottomFrame3,text="11",style = 'Main8.TButton',width=x)
 
-        btn5.pack(expand=True,fill='x',padx=10)
+        btn11.pack(fill='x',padx=10,pady=(8,0))
 
-        btn6 = ttk.Button(bottomFrame3,text="按鈕1")
+        btn12 = ttk.Button(bottomFrame3,text="12",style = 'Main9.TButton',width=x)
 
-        btn6.pack(expand=True,fill='x',padx=10)
-
+        btn12.pack(fill='x',padx=10,pady=(16,12))
 def main():
-    window = Window(theme="blue")
+    window = Window(theme="arc")
     window.mainloop()
 
 if __name__ == '__main__':
