@@ -4,11 +4,6 @@ from tkinter import ttk
 class Window(ThemedTk):#class裡面一定要有self
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
-        self.title('聽說用字體大小做')
-        global globalA
-        globalA = 20
-        print(globalA)
-
         style = ttk.Style(self)
         #===================TopFrame==============
         topFrame = ttk.Frame(self,borderwidth=3,relief='groove')        
