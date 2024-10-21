@@ -22,17 +22,24 @@ class Window(ThemedTk):
 
         #==============bottomFrame===============
         bottomFrame = ttk.Frame(self)
-        
-        
+        self.agreement = tk.StringVar()
+        ttk.Checkbutton(bottomFrame,
+            text='打勾名稱',
+            command=self.agreement_changed,
+            variable=self.agreement,
+            onvalue='以確認打勾',
+            offvalue='disagree').pack()       
+        self.agreement2 = tk.StringVar()
+
         bottomFrame.pack(expand=True,fill='x',padx=20,pady=(0,20),ipadx=10,ipady=10)
         #==============end bottomFrame===============
-
-    
-        
-
+    def agreement_changed(self):
+        tk.messagebox.showinfo(title='確認標題',
+                        message=self.agreement.get())
 def main():
     window = Window(theme="arc")
     window.mainloop()
 
 if __name__ == '__main__':
     main()
+
