@@ -29,7 +29,7 @@ class Window(ThemedTk):
             variable=self.agreement,
             onvalue='以確認打勾',
             offvalue='disagree').pack()       
-        self.agreement2 = tk.StringVar()
+        
 
         bottomFrame.pack(expand=True,fill='x',padx=20,pady=(0,20),ipadx=10,ipady=10)
         #==============end bottomFrame===============
