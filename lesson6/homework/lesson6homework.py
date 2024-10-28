@@ -1,4 +1,4 @@
-import datasource
+import homeworkdatasource
 
 from tkinter import ttk
 import tkinter as tk
@@ -24,7 +24,7 @@ class Window(ThemedTk):
 
         #==============bottomFrame===============
         bottomFrame = ttk.Frame(self)
-        sitenames = datasource.get_sitename()
+        sitenames = homeworkdatasource.get_sitename()
         self.selected_site = tk.StringVar()
         sitenames_cb = ttk.Combobox(bottomFrame, textvariable=self.selected_site,values=sitenames,state='readonly')
         self.selected_site.set('請選擇站點')
@@ -72,7 +72,7 @@ class Window(ThemedTk):
     def sitename_selected(self,event):
         selected = self.selected_site.get()
         print(selected)
-        selected_data = datasource.get_selected_data(selected)
+        selected_data = homeworkdatasource.get_selected_data(selected)
         for record in selected_data:
             self.tree.insert("", "end", values=record)
 
