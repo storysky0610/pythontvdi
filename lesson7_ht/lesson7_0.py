@@ -68,21 +68,19 @@ class Window(ThemedTk):
         bottomFrame.pack(expand=True,fill='x',padx=20,pady=(0,20),ipadx=10,ipady=10)
 
             #==============end bottomFrame===============
-
+        
     def sitename_selected(self,event):
-        for chidren in self.tree.get_children():
-            self.tree.delete(chidren)
-        selected = self.selected_site.get()        
-        selected_data = datasource.get_selected_data(selected)
-        for record in selected_data:
-            self.tree.insert("", "end", values=record)
+        selected = self.selected_site.get()
+        print(selected)
+        #selected_data = datasource.get_selected_data(selected)
+        #for record in selected_data:
+            #self.tree.insert("", "end", values=record)
 
     
-        
- 
+def download_data():
+    pass        
 
 def main():
-    datasource.download_data() #下載至資料庫
     window = Window(theme="arc")
     window.mainloop()
 

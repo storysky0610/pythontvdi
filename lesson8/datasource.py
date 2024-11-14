@@ -63,16 +63,18 @@ def get_selected_data(sitename:str)->list[list]:
     with conn:
         cursor = conn.cursor()        
         sql = '''
-        SELECT date,county,aqi,pm25,status,lat,lon
+        SELECT date,county,sitename,aqi,pm25,status,lat,lon
         FROM records
         WHERE sitename=?
-        ORDER BY date DESC;
+        ORDER  BY  date  DESC ;
+
         '''
         cursor.execute(sql,(sitename,))
         sitename_list = [list(item) for item in cursor.fetchall()]
         return sitename_list
     
 def download_data():
+    print('重新下載資料')
     conn = sqlite3.connect("AQI.db")
     url = 'https://data.moenv.gov.tw/api/v2/aqx_p_488?api_key=e8dd42e6-9b8b-43f8-991e-b3dee723a52d&limit=1000&sort=datacreationdate%20desc&format=JSON'
     try:

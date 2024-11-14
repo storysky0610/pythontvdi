@@ -1,5 +1,9 @@
-INSERT INTO  records(sitename,county,aqi,status,pm25,date,lat,lon)
-VALUES ('屏東(枋山)','屏東縣',34,'良好',18,'2024-11-04','18,22.260899','120.651472');
+/*選擇站點名稱*/
+SELECT DISTINCT sitename
+FROM records
 
-INSERT OR IGNORE  INTO records (sitename,county,aqi,status,pm25,date,lat,lon)
-VALUES ('屏東(枋山)','屏東縣',34,'良好',18,'2024-11-04','18,22.260899','120.651472')
+SELECT date,county,aqi,pm25,status,lat,lon
+FROM records
+WHERE sitename='富貴角'
+ORDER BY date DESC;
+
