@@ -12,31 +12,30 @@ plant_list = df['Plant'].dropna().unique().tolist()
 # 创建GUI窗口
 root = tk.Tk()
 root.title("Factory Workstation Selector")
-root.geometry("500x300")
+root.geometry("400x200")
 
-# 标签
-label_plant = tk.Label(root, text="Select Plant:")
-label_plant.pack(pady=10)
+# 设置窗口居中
+root.eval('tk::PlaceWindow %s center' % root.winfo_toplevel())
 
-# Plant下拉菜单
-plant_combobox = ttk.Combobox(root, values=plant_list, state="readonly")
-plant_combobox.pack(pady=10)
+# 设置grid布局
+root.columnconfigure(0, weight=1, minsize=100)  # 第一列用于标签，设置最小宽度
+root.columnconfigure(1, weight=2, minsize=150)  # 第二列用于输入框（下拉菜单）
 
-# 标签
-label_workstation = tk.Label(root, text="Select Workstation Code:")
-label_workstation.pack(pady=10)
+# 统一的函数：创建和更新下拉菜单
+def create_combobox(label_text, row, combobox_name, values=None, event=None):
+    # 标签
+    label = tk.Label(root, text=label_text)
+    label.grid(row=row, column=0, padx=10, pady=5, sticky="w")
 
-# Workstation下拉菜单
-workstation_combobox = ttk.Combobox(root, state="readonly")
-workstation_combobox.pack(pady=10)
+    # 下拉菜单
+    combobox = ttk.Combobox(root, values=values, state="readonly")
+    combobox.grid(row=row, column=1, padx=10, pady=5)
 
-# 标签
-label_code = tk.Label(root, text="Select Code:")
-label_code.pack(pady=10)
+    # 绑定选择事件（如果提供）
+    if event:
+        combobox.bind('<<ComboboxSelected>>', event)
 
-# Code下拉菜单
-code_combobox = ttk.Combobox(root, state="readonly")
-code_combobox.pack(pady=10)
+    return combobox
 
 # 更新 Workstation Code 选项的函数
 def update_workstation_options(event):
@@ -59,9 +58,10 @@ def update_code_options(event):
         code_combobox['values'] = filtered_codes
         code_combobox.set('')  # 清空Code选择
 
-# 绑定Plant和Workstation Code下拉菜单的选择事件
-plant_combobox.bind('<<ComboboxSelected>>', update_workstation_options)
-workstation_combobox.bind('<<ComboboxSelected>>', update_code_options)
+# 创建Plant、Workstation Code和Code下拉菜单
+plant_combobox = create_combobox("工廠:", 0, 'plant', plant_list, update_workstation_options)
+workstation_combobox = create_combobox("車間:", 1, 'workstation', event=update_code_options)
+code_combobox = create_combobox("工站:", 2, 'code')
 
 # 提交按钮，输出选择的Plant、Workstation Code和Code
 def submit_selection():
@@ -77,7 +77,7 @@ def submit_selection():
 
 # 提交按钮
 submit_button = tk.Button(root, text="Submit", command=submit_selection)
-submit_button.pack(pady=20)
+submit_button.grid(row=3, column=0, columnspan=2, pady=20)
 
 # 运行GUI
 root.mainloop()
