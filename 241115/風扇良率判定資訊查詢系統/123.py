@@ -9,7 +9,7 @@ class Window(ThemedTk):
         super().__init__()
         # ======= 基本設置 =======
         self.title("風扇貼標正確判斷")
-        self.geometry("800x400")  # 設定視窗大小
+        # self.geometry("1200x400")  # 設定視窗大小
         style = ttk.Style(self)
         style.configure("Topframe.Tabel", font=("Helvetica", 20))  # 標題樣式
         font1 = ("標楷體", 16)
@@ -17,15 +17,67 @@ class Window(ThemedTk):
         # ======= 讀取數據 =======
         self.df = pd.read_csv('Factoryworkstation.csv')  # 調整為你的檔案路徑
         self.data = pd.read_csv('virtual_data_with_permissions.csv')
+        self.frame0_data = pd.read_csv('orders_large.csv')
 
         # ======= 標題部分 =======
         topFrame = ttk.Frame(self)
-        ttk.Label(topFrame, text="風扇貼標歪斜檢測", font=("Helvetica", 40)).pack(padx=50, pady=20)
+        ttk.Label(topFrame, text="風扇貼標歪斜檢測", font=("Helvetica", 40)).pack(padx=20, pady=20)
         topFrame.pack()
 
         # ======= 中間選項部分 =======
         midFrame = ttk.Frame(self)
+#Date,Order ID,Product,Quantity
+        
+        frame0 = ttk.Frame(midFrame)
+        tk.Label(frame0, text="日期:", font=font1).pack(side="left", padx=5, pady=5)
+        self.data_county = tk.StringVar()
+        self.data_cobox = ttk.Combobox(
+            frame0, textvariable=self.data_county,
+            values=0,
+            state="readonly",
+            width=15
+        )
+        self.data_cobox.set("請選擇日期")
+        self.data_cobox.pack(side="left", padx=5)
+        self.data_cobox.bind("<<ComboboxSelected>>", self.update_workshop_options)
 
+        tk.Label(frame0, text="訂單號碼:", font=font1).pack(side="left", padx=5, pady=5)
+        self.OrderID_county = tk.StringVar()
+        self.OrderID_cobox = ttk.Combobox(
+            frame0, textvariable=self.OrderID_county,
+            values=0,
+            state="readonly",
+            width=15
+        )
+        self.OrderID_cobox.set("訂單號碼:")
+        self.OrderID_cobox.pack(side="left", padx=5)
+        self.OrderID_cobox.bind("<<ComboboxSelected>>", self.update_workshop_options)
+
+        tk.Label(frame0, text="訂單料號:", font=font1).pack(side="left", padx=5, pady=5)
+        self.Product_county = tk.StringVar()
+        self.Product_cobox = ttk.Combobox(
+            frame0, textvariable=self.Product_county,
+            values=0,
+            state="readonly",
+            width=15
+        )
+        self.Product_cobox.set("訂單料號")
+        self.Product_cobox.pack(side="left", padx=5)
+        self.Product_cobox.bind("<<ComboboxSelected>>", self.update_workshop_options)
+
+        tk.Label(frame0, text="訂單數量:", font=font1).pack(side="left", padx=5, pady=5)
+        self.Quantity_county = tk.StringVar()
+        self.Quantity_cobox = ttk.Combobox(
+            frame0, textvariable=self.Quantity_county,
+            values=0,
+            state="readonly",
+            width=6
+        )
+        self.Quantity_cobox.set("訂單數量")
+        self.Quantity_cobox.pack(side="left", padx=5)
+        self.Quantity_cobox.bind("<<ComboboxSelected>>", self.update_workshop_options)
+
+        frame0.pack()
         # 第一排 (廠區、車間、工站)
         frame1 = ttk.Frame(midFrame)
         tk.Label(frame1, text="廠區:", font=font1).pack(side="left", padx=5, pady=5)
@@ -34,7 +86,7 @@ class Window(ThemedTk):
             frame1, textvariable=self.Factory_county,
             values=self.get_unique_values('Plant'),
             state="readonly",
-            width=15
+            width=10
         )
         self.Factory_cobox.set("請選擇廠區")
         self.Factory_cobox.pack(side="left", padx=5)
@@ -45,7 +97,7 @@ class Window(ThemedTk):
         self.workshop_cobox = ttk.Combobox(
             frame1, textvariable=self.workshop_county,
             state="readonly",
-            width=15
+            width=10
         )
         self.workshop_cobox.set("請選擇車間")
         self.workshop_cobox.pack(side="left", padx=5)
@@ -56,7 +108,7 @@ class Window(ThemedTk):
         self.workstation_cobox = ttk.Combobox(
             frame1, textvariable=self.workstation_county,
             state="readonly",
-            width=15
+            width=10
         )
         self.workstation_cobox.set("請選擇工站")
         self.workstation_cobox.pack(side="left", padx=5)
@@ -149,7 +201,9 @@ class Window(ThemedTk):
 
     def update_manufacturer_options(self,event):
         selcted_manufacturer = self.manufacturer.get()
-        return self.d[column_name].dropna().unique().tolist()
+        # return self.d[column_name].dropna().unique().tolist()
+    def data_updata(self,event):
+        workstation_city = event.widget.get()
 
 if __name__ == "__main__":
     window = Window()

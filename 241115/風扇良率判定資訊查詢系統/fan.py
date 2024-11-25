@@ -65,28 +65,28 @@ class Window(ThemedTk):
         workstation_cobox.pack(side="left")
         workstation_cobox.bind("<<ComboboxSelected>>", self.workstation)
         midFrame.pack()
-    # def Factory_county(self,event):
-    #     Factory_city = event.widget.get()
-    #     print(Factory_city)
+    def Factory_county(self,event):
+        Factory_city = event.widget.get()
+        print(Factory_city)
 
 
-    # def workshop_county(self,event):
-    #     workshop_city = event.widget.get()
-    #     print(workshop_city)
+    def workshop_county(self,event):
+        workshop_city = event.widget.get()
+        print(workshop_city)
         
-    # def workstation(self,event):
-    #     workstation_city = event.widget.get()
-    #     print(workstation_city)
-    def update_code_options(event):
-        df = pd.read_csv('Factoryworkstation.csv')
-        Factory_city = event.widget.get() 
+    def workstation(self,event):
         workstation_city = event.widget.get()
-        if Factory_city and workstation_city:  # 如果都已选择
-            # 根据选择的Plant和Workstation Code，过滤出对应的Code
-            filtered_codes = df[(df['Plant'] == Factory_city) & 
-                                (df['Workstation Code'] == workstation_city)]['Code'].unique().tolist()
-            workstation_city['values'] = filtered_codes  # 更新Code的选项
-            workstation_city = event.widget.get('')  # 清空Code选择
+        print(workstation_city)
+    # def update_code_options(event):
+    #     df = pd.read_csv('Factoryworkstation.csv')
+    #     Factory_city = event.widget.get() 
+    #     workstation_city = event.widget.get()
+    #     if Factory_city and workstation_city:  # 如果都已选择
+    #         # 根据选择的Plant和Workstation Code，过滤出对应的Code
+    #         filtered_codes = df[(df['Plant'] == Factory_city) & 
+    #                             (df['Workstation Code'] == workstation_city)]['Code'].unique().tolist()
+    #         workstation_city['values'] = filtered_codes  # 更新Code的选项
+    #         workstation_city = event.widget.get('')  # 清空Code选择
 
 if __name__== "__main__":
     window = Window()
