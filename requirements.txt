@@ -6,3 +6,4 @@ tkintermapview
 python-dotenv
 pandas
 matplotlib
+pydantic
