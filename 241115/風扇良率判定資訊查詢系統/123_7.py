@@ -14,7 +14,7 @@ class Window(ThemedTk):
 
         # ======= 讀取數據 =======
         self.df = pd.read_csv('Factoryworkstation.csv')  # 調整為你的檔案路徑
-        self.data = pd.read_csv('virtual_data_with_permissions.csv')##
+        self.data = pd.read_csv('virtual_data_with_permissions.csv')  ##
         self.frame0_data = pd.read_csv('orders_large.csv')
 
         # ======= 標題部分 =======
@@ -125,7 +125,6 @@ class Window(ThemedTk):
             width=15
         )
         self.manufacturer_cobox.set("請選擇製造者ID")
-        self.manufacturer_cobox.bind("<<ComboboxSelected>>", self.update_manufacturer_name)
         self.manufacturer_cobox.pack(side="left", padx=5)
 
         # 品保ID (代號 2)
@@ -136,9 +135,7 @@ class Window(ThemedTk):
             state="readonly",
             width=15
         )
-        
         self.quality_control_cobox.set("請選擇品保ID")
-        self.quality_control_cobox.bind("<<ComboboxSelected>>", self.update_quality_control_name)
         self.quality_control_cobox.pack(side="left", padx=5)
 
         # 組長ID (代號 3)
@@ -150,7 +147,6 @@ class Window(ThemedTk):
             width=15
         )
         self.team_leader_cobox.set("請選擇組長ID")
-        self.team_leader_cobox.bind("<<ComboboxSelected>>", self.update_team_leader_name)
         self.team_leader_cobox.pack(side="left", padx=5)
 
         # 更新製造者ID、品保ID、組長ID選項
@@ -183,137 +179,79 @@ class Window(ThemedTk):
         )
         self.quality_name_cobox.set("請選擇品保")
         self.quality_name_cobox.pack(side="left", padx=5)
-        
+
+
         # 組長ID (代號 3)
         tk.Label(frame3, text="組長:", font=font1).pack(side="left", padx=5, pady=5)
-        self.team_name_id = tk.StringVar()
-        self.team_name_cobox = ttk.Combobox(
+        self.team_leader_name_id = tk.StringVar()
+        self.team_leader_name_cobox = ttk.Combobox(
             frame3, textvariable=self.team_leader_id,
             state="readonly",
             width=15
         )
-        self.team_name_cobox.set("請選擇組長")
-        self.team_name_cobox.pack(side="left", padx=5)
+        self.team_leader_name_cobox.set("請選擇組長")  # 設置初始顯示文字為 "請選擇組長"
+        self.team_leader_name_cobox.pack(side="left", padx=5)
 
 
-        frame3.pack(pady=10)
+        frame3.pack()
+
         midFrame.pack(pady=20)
 
-    # ======= 工具方法 =======
-    def get_date_values(self, name):
-        return self.frame0_data[name].dropna().unique().tolist()
+    def get_date_values(self, column):
+        return list(self.df[column].unique())  # 取出唯一的日期值
 
-    def update_OrderID_options(self, event):
-        selected_date = self.date_county.get()
-        if selected_date:
-            filtered_OrderID = self.frame0_data[self.frame0_data['Date'] == selected_date]['OrderID'].unique().tolist()
-            self.OrderID_cobox['values'] = filtered_OrderID
+    def update_OrderID_options(self, event=None):
+        date_value = self.date_county.get()  # 取得選中的日期
+        if date_value != "請選擇日期":
+            order_ids = self.df[self.df['Date'] == date_value]['OrderID'].unique()
+            self.OrderID_cobox['values'] = order_ids.tolist()
+            self.OrderID_cobox.set("訂單號碼")
+        else:
+            self.OrderID_cobox.set("請選擇訂單號碼")
 
-    def update_Product_Quantity(self, event):
-        selected_date = self.date_county.get()  # 取得選擇的日期
-        selected_order_id = self.OrderID_county.get()  # 取得選擇的訂單號碼
-        
-        if selected_date and selected_order_id:
-            # 根據 Date 和 OrderID 篩選符合條件的 Product 和 Quantity
-            filtered_data = self.frame0_data[
-                (self.frame0_data['Date'] == selected_date) & 
-                (self.frame0_data['OrderID'] == selected_order_id)
-            ]
-            
-            # 更新訂單料號 (Product) 和 訂單數量 (Quantity) 選項
-            products = filtered_data['Product'].unique().tolist()
-            quantities = filtered_data['Quantity'].unique().tolist()
+    def update_Product_Quantity(self, event=None):
+        order_value = self.OrderID_county.get()  
+        if order_value != "訂單號碼":
+            product_values = self.df[self.df['OrderID'] == order_value]['Product'].unique()
+            quantity_values = self.df[self.df['OrderID'] == order_value]['Quantity'].unique()
+            self.Product_cobox['values'] = product_values.tolist()
+            self.Quantity_cobox['values'] = quantity_values.tolist()
+            self.Product_cobox.set("訂單料號")
+            self.Quantity_cobox.set("訂單數量")
+        else:
+            self.Product_cobox.set("請選擇訂單料號")
+            self.Quantity_cobox.set("請選擇訂單數量")
 
-            self.Product_cobox['values'] = products
-            self.Quantity_cobox['values'] = quantities
-
-            if products:
-                self.Product_cobox.set(products[0])  # 預設選擇第一個產品料號
-            if quantities:
-                self.Quantity_cobox.set(quantities[0])  # 預設選擇第一個訂單數量
-
-    def get_unique_values(self, column_name):
-        return self.df[column_name].dropna().unique().tolist()
-
-    def update_workshop_options(self, event):
-        selected_plant = self.Factory_county.get()
-        if selected_plant:
-            filtered_workstations = self.df[self.df['Plant'] == selected_plant]['Workstation Code'].unique().tolist()
-            self.workshop_cobox['values'] = filtered_workstations
+    def update_workshop_options(self, event=None):
+        factory_value = self.Factory_county.get()
+        if factory_value != "請選擇廠區":
+            workshop_values = self.data[self.data['Plant'] == factory_value]['WorkShop'].unique()
+            self.workshop_cobox['values'] = workshop_values.tolist()
             self.workshop_cobox.set("請選擇車間")
-            self.workstation_cobox.set("請選擇工站")
-            self.workstation_cobox['values'] = []
+        else:
+            self.workshop_cobox.set("請選擇車間")
 
-    def update_code_options(self, event):
-        selected_plant = self.Factory_county.get()
-        selected_workstation = self.workshop_county.get()
-        if selected_plant and selected_workstation:
-            filtered_codes = self.df[
-                (self.df['Plant'] == selected_plant) & 
-                (self.df['Workstation Code'] == selected_workstation)
-            ]['Code'].unique().tolist()
-            self.workstation_cobox['values'] = filtered_codes
+    def update_code_options(self, event=None):
+        workshop_value = self.workshop_county.get()
+        if workshop_value != "請選擇車間":
+            workstation_values = self.data[self.data['WorkShop'] == workshop_value]['WorkStation'].unique()
+            self.workstation_cobox['values'] = workstation_values.tolist()
             self.workstation_cobox.set("請選擇工站")
+        else:
+            self.workstation_cobox.set("請選擇工站")
+
     def update_manufacturer_options(self):
-        # 假設此方法會更新製造者ID選項
-        manufacturer_ids = self.data[self.data['權限代號'] == 1]['ID'].unique().tolist()
-
-        # 更新製造者ID選項
-        self.manufacturer_cobox['values'] = manufacturer_ids
-
-        # 預設顯示文字
-        self.manufacturer_cobox.set("請選擇製造者ID")
+        manufacturer_values = self.data['ManufacturerID'].unique()
+        self.manufacturer_cobox['values'] = manufacturer_values.tolist()
 
     def update_quality_control_options(self):
-        # 假設此方法會更新製造者ID選項
-        manufacturer_ids = self.data[self.data['權限代號'] == 3]['ID'].unique().tolist()
-
-        # 更新製造者ID選項
-        self.manufacturer_cobox['values'] = manufacturer_ids
-
-        # 預設顯示文字
-        self.manufacturer_cobox.set("請選擇製造者ID")
+        quality_control_values = self.data['QualityControlID'].unique()
+        self.quality_control_cobox['values'] = quality_control_values.tolist()
 
     def update_team_leader_options(self):
-        # 假設此方法會更新製造者ID選項
-        manufacturer_ids = self.data[self.data['權限代號'] == 2]['ID'].unique().tolist()
-
-        # 更新製造者ID選項
-        self.manufacturer_cobox['values'] = manufacturer_ids
-
-        # 預設顯示文字
-        self.manufacturer_cobox.set("請選擇製造者ID")
-    def update_manufacturer_name(self, event):
-        selected_id = self.manufacturer_id.get()  # 取得選擇的製造者 ID
-        if selected_id:
-            # 根據選擇的 ID 查詢對應的姓名
-            filtered_name = self.data[self.data['ID'] == selected_id]['姓名'].tolist()
-            if filtered_name:
-                self.manufacturer_name_cobox.set(filtered_name[0])  # 設定對應的姓名
-            else:
-                self.manufacturer_name_cobox.set("未找到對應姓名")
-
-    def update_quality_control_name(self, event):
-        selected_id = self.quality_control_id.get()  # 取得選擇的品保 ID
-        if selected_id:
-            # 根據選擇的 ID 查詢對應的姓名
-            filtered_name = self.data[self.data['ID'] == selected_id]['姓名'].tolist()
-            if filtered_name:
-                self.quality_name_cobox.set(filtered_name[0])  # 設定對應的姓名
-            else:
-                self.quality_name_cobox.set("未找到對應姓名")
-
-    def update_team_leader_name(self, event):
-        selected_id = self.team_leader_id.get()  # 取得選擇的組長 ID
-        if selected_id:
-            # 根據選擇的 ID 查詢對應的姓名
-            filtered_name = self.data[self.data['ID'] == selected_id]['姓名'].tolist()
-            if filtered_name:
-                self.team_name_cobox.set(filtered_name[0])  # 設定對應的姓名
-            else:
-                self.team_name_cobox.set("未找到對應姓名")
-
+        team_leader_values = self.data['TeamLeaderID'].unique()
+        self.team_leader_cobox['values'] = team_leader_values.tolist()
 
 if __name__ == "__main__":
-    window = Window()
-    window.mainloop()
+    app = Window()
+    app.mainloop()
