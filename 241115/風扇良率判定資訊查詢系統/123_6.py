@@ -265,24 +265,24 @@ class Window(ThemedTk):
         self.manufacturer_cobox.set("請選擇製造者ID")
 
     def update_quality_control_options(self):
-        # 假設此方法會更新製造者ID選項
-        manufacturer_ids = self.data[self.data['權限代號'] == 3]['ID'].unique().tolist()
+        # 假設此方法會更新品保ID選項
+        quality_control_ids = self.data[self.data['權限代號'] == 3]['ID'].unique().tolist()
 
-        # 更新製造者ID選項
-        self.manufacturer_cobox['values'] = manufacturer_ids
+        # 更新品保ID選項
+        self.quality_control_cobox['values'] = quality_control_ids
 
         # 預設顯示文字
-        self.manufacturer_cobox.set("請選擇製造者ID")
+        self.quality_control_cobox.set("請選擇品保ID")
 
     def update_team_leader_options(self):
-        # 假設此方法會更新製造者ID選項
-        manufacturer_ids = self.data[self.data['權限代號'] == 2]['ID'].unique().tolist()
+        # 假設此方法會更新組長ID選項
+        team_leader_ids = self.data[self.data['權限代號'] == 2]['ID'].unique().tolist()
 
-        # 更新製造者ID選項
-        self.manufacturer_cobox['values'] = manufacturer_ids
+        # 更新組長ID選項
+        self.team_leader_cobox['values'] = team_leader_ids
 
         # 預設顯示文字
-        self.manufacturer_cobox.set("請選擇製造者ID")
+        self.team_leader_cobox.set("請選擇組長ID")
     def update_manufacturer_name(self, event):
         selected_id = self.manufacturer_id.get()  # 取得選擇的製造者 ID
         if selected_id:
