@@ -26,7 +26,7 @@ class Window(ThemedTk):
 
         # ======= 中間選項部分 =======
         midFrame = ttk.Frame(self)
-#Date,Order ID,Product,Quantity
+        #Date,Order ID,Product,Quantity
         # ======= frame0  =======
         frame0 = ttk.Frame(midFrame)
         # ======= frame0  =======
@@ -53,29 +53,23 @@ class Window(ThemedTk):
         )
         self.OrderID_cobox.set("訂單號碼:")
         self.OrderID_cobox.pack(side="left", padx=5)
-        self.OrderID_cobox.bind("<<ComboboxSelected>>", self.update_OrderID_options)
+        self.OrderID_cobox.bind("<<ComboboxSelected>>", self.update_Product_options)  # 這裡改為更新Product選項
 
         # ================= OrderID  =====================
 
-
         # ================= Product  =====================
         # ======= Product  =======
-        # tk.Label(frame0, text="訂單料號:", font=font1).pack(side="left", padx=5, pady=5)
-        # self.Product_county = tk.StringVar()
-        # self.Product_cobox = ttk.Combobox(
-        #     frame0, textvariable=self.Product_county,
-        #     state="readonly",
-        #     width=15
-        # )
-        # self.Product_cobox.set("訂單料號")
-        # self.Product_cobox.pack(side="left", padx=5)
+        tk.Label(frame0, text="訂單料號:", font=font1).pack(side="left", padx=5, pady=5)
+        self.Product_county = tk.StringVar()
+        self.Product_cobox = ttk.Combobox(
+            frame0, textvariable=self.Product_county,
+            state="readonly",
+            width=15
+        )
+        self.Product_cobox.set("訂單料號")
+        self.Product_cobox.pack(side="left", padx=5)
         # ================= Product  =====================
 
-
-
-
-
-        
         # ================= Quantity  =====================
         tk.Label(frame0, text="訂單數量:", font=font1).pack(side="left", padx=5, pady=5)
         self.Quantity_county = tk.StringVar()
@@ -191,10 +185,10 @@ class Window(ThemedTk):
         
         if selected_date and selected_order_id:
             # 根據 Date 和 OrderID 篩選符合條件的 Product
-            filtered_products = self.df[
-                (self.df['Date'] == selected_date) &  # 篩選符合選擇的日期
-                (self.df['OrderID'] == selected_order_id)  # 篩選符合選擇的訂單號碼
-            ]['Product'].unique().tolist()  # 提取唯一的產品列表
+            filtered_products = self.frame0_data[(
+                self.frame0_data['Date'] == selected_date) &  # 篩選符合選擇的日期
+                (self.frame0_data['OrderID'] == selected_order_id)]  # 篩選符合選擇的訂單號碼
+            filtered_products = filtered_products['Product'].unique().tolist()
             self.Product_cobox['values'] = filtered_products  # 更新產品選項
             self.Product_cobox.set("訂單料號")  # 重置 Product 選項
 
@@ -224,7 +218,7 @@ class Window(ThemedTk):
         selected_plant = self.Factory_county.get()
         selected_workstation = self.workshop_county.get()
         if selected_plant and selected_workstation:
-            filtered_codes = self.df[(self.df['Plant'] == selected_plant) &
+            filtered_codes = self.df[(self.df['Plant'] == selected_plant) & 
                                      (self.df['Workstation Code'] == selected_workstation)]['Code'].unique().tolist()
             self.workstation_cobox['values'] = filtered_codes
             self.workstation_cobox.set("請選擇工站")  # 重置工站選項
