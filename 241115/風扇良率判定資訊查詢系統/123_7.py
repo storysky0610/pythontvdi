@@ -4,6 +4,7 @@ from ttkthemes import ThemedTk
 import pandas as pd
 from tkinter import Tk, Label
 from PIL import Image, ImageTk  # 載入PIL庫
+import csv
 
 class Window(ThemedTk):
     def __init__(self, *args, **kwargs):
@@ -36,6 +37,8 @@ class Window(ThemedTk):
         self.date_cobox.pack(side="left", padx=5)
         self.date_cobox.bind("<<ComboboxSelected>>", self.update_OrderID_options)
         # ================= date  =====================
+        date=self.date_county.get()
+        print(date)
         # ================= OrderID  =====================
         tk.Label(frame0, text="訂單號碼:", font=font1).pack(side="left", padx=5, pady=5)
         self.OrderID_county = tk.StringVar()
@@ -51,13 +54,15 @@ class Window(ThemedTk):
             frame0, textvariable=self.Product_county,state="readonly",width=15)
         self.Product_cobox.set("訂單料號")
         self.Product_cobox.pack(side="left", padx=5)
-        # ================= Quantity  =====================
+        # ================= Product  =====================
+        # ================= Quantity  =====================        
         tk.Label(frame0, text="訂單數量:", font=font1).pack(side="left", padx=5, pady=5)
         self.Quantity_county = tk.StringVar()
         self.Quantity_cobox = ttk.Combobox(frame0, textvariable=self.Quantity_county,state="readonly",width=8)
         self.Quantity_cobox.set("訂單數量")
         self.Quantity_cobox.pack(side="left", padx=5)
         frame0.pack()
+        # ================= Quantity  =====================
         # ================= Factory  =====================
         tk.Label(frame0, text="廠區:", font=font1).pack(side="left", padx=5, pady=5)
         self.Factory_county = tk.StringVar()
@@ -126,7 +131,86 @@ class Window(ThemedTk):
         #=====================組長ID========================================================
         frame2.pack(pady=10)
         midFrame.pack(pady=20)
+                # ======= 讀取圖片 =======
+        self.img_path = r"C:\Users\user\Documents\GitHub\tivd\pythontvdi\241115\風扇良率判定資訊查詢系統\0_1_5.png"  # 請將此處的路徑替換為圖片的路徑
+        self.image = Image.open(self.img_path)  # 打開圖片
+        self.photo = ImageTk.PhotoImage(self.image)  # 將PIL圖像轉換為Tkinter兼容格式
+        self.image = self.image.resize((400, int(400 * self.image.height / self.image.width)))
+        self.photo = ImageTk.PhotoImage(self.image)
+        # ======= 顯示圖片 =======
+        self.label = Label(self, image=self.photo)  # 在Label中顯示圖片
+        self.label.pack(padx=20, pady=20,side="left")
+        self.button = tk.Button(self, text="切換圖片並寫入CSV", command=self.change_image_and_write_csv)
+        self.button.pack(pady=10)
 
+    def change_image_and_write_csv(self):
+        # 開啟文件選擇對話框讓使用者選擇新圖片
+        # date=self.date_county.get()# 日期 date  
+        # OrderID=self.OrderID_county.get()# 訂單號碼 OrderID  
+        # Product=self.Product_county.get()# 訂單料號 Product  
+        # Quantity=self.Quantity_county.get()# 訂單數量 Quantity
+        # Factory=self.Factory_county.get()# 廠區 Factory  
+        # workstation=self.workstation_county.get()# 車間 workshop
+        # manufacturer_id=self.manufacturer_id.get()# 製造ID manufacturer
+        # manufacturer_name_id=self.manufacturer_name_id.get()# 製造者 manufacturer_name
+        # quality_control_id=self.quality_control_id.get()# 品保ID quality_control_id
+        # quality_name_id=self.quality_name_id.get()#品保者 quality_name_id
+        # team_leader_id=self.team_leader_id.get()#組長ID team_leader_id
+        # team_name_id=self.team_name_id.get()#組長 team_name_id
+
+        # print(date,OrderID,Product,Factory,workstation,manufacturer_id,manufacturer_name_id,quality_control_id,quality_name_id,team_leader_id,team_name_id)
+        # new_img_path = filedialog.askopenfilename(title="選擇圖片", filetypes=[("Image files", "*.png;*.jpg;*.jpeg;*.gif;*.bmp")])
+
+        # if new_img_path:
+        #     # 更新圖片
+        #     self.img_path = new_img_path
+        #     self.image = Image.open(self.img_path)
+        #     self.photo = ImageTk.PhotoImage(self.image)
+        #     self.label.config(image=self.photo)  # 切換顯示的圖片
+
+            # # 將圖片路徑與時間戳等數據寫入CSV
+            # self.write_to_csv(self.img_path)
+# def data_writer():
+    # 收集所有變數的值
+        date = self.date_county.get()
+        OrderID = self.OrderID_county.get()
+        Product = self.Product_county.get()
+        Quantity = self.Quantity_county.get()
+        Factory = self.Factory_county.get()
+        workstation = self.workstation_county.get()
+        manufacturer_id = self.manufacturer_id.get()
+        manufacturer_name_id = self.manufacturer_name_id.get()
+        quality_control_id = self.quality_control_id.get()
+        quality_name_id = self.quality_name_id.get()
+        team_leader_id = self.team_leader_id.get()
+        team_name_id = self.team_name_id.get()
+
+        # 要寫入的資料
+        data = [date, OrderID, Product, Quantity, Factory, workstation, manufacturer_id, manufacturer_name_id,
+                quality_control_id, quality_name_id, team_leader_id, team_name_id]
+
+        # 檔案名稱（可以自行更換）
+        file_name = f'{OrderID}_{date}.csv'
+
+        # 寫入 CSV 檔案
+        with open(file_name, mode='a', newline='') as file:
+            writer = csv.writer(file)
+            
+            # 如果是第一行，可以先寫入表頭（欄位名稱），如果檔案已經有資料則跳過
+            if file.tell() == 0:  # 檔案是空的，寫入表頭
+                writer.writerow(['Date', 'OrderID', 'Product', 'Quantity', 'Factory', 'Workstation', 'ManufacturerID',
+                                'ManufacturerNameID', 'QualityControlID', 'QualityNameID', 'TeamLeaderID', 'TeamNameID'])
+
+            # 寫入一行資料
+            writer.writerow(data)
+
+    def write_to_csv(self, img_path):
+        # 這裡可以自定義要寫入的數據
+        data = {
+            '圖片路徑': img_path,
+            '時間戳': '2024-11-27 15:30:00',  # 這裡可以根據需要自動生成或手動設定時間
+            '其他數據': 'Sample Data'
+        }
     # ======= 工具方法 =======
     def get_date_values(self, name):
         return self.frame0_data[name].dropna().unique().tolist()
