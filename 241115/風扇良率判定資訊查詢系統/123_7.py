@@ -126,39 +126,7 @@ class Window(ThemedTk):
         #=====================組長ID========================================================
         frame2.pack(pady=10)
         midFrame.pack(pady=20)
-                # ======= 讀取圖片 =======
-        self.img_path = r"C:\Users\a2778\GitHub\pythontvdi\pythontvdi\241115\風扇良率判定資訊查詢系統\0_1_5.png"  # 請將此處的路徑替換為圖片的路徑
-        self.image = Image.open(self.img_path)  # 打開圖片
-        self.photo = ImageTk.PhotoImage(self.image)  # 將PIL圖像轉換為Tkinter兼容格式
-        self.image = self.image.resize((400, int(400 * self.image.height / self.image.width)))
-        self.photo = ImageTk.PhotoImage(self.image)
-        # ======= 顯示圖片 =======
-        self.label = Label(self, image=self.photo)  # 在Label中顯示圖片
-        self.label.pack(padx=20, pady=20,side="left")
-        self.button = tk.Button(self, text="切換圖片並寫入CSV", command=self.change_image_and_write_csv)
-        self.button.pack(pady=10)
 
-    def change_image_and_write_csv(self):
-        # 開啟文件選擇對話框讓使用者選擇新圖片
-        new_img_path = filedialog.askopenfilename(title="選擇圖片", filetypes=[("Image files", "*.png;*.jpg;*.jpeg;*.gif;*.bmp")])
-
-        if new_img_path:
-            # 更新圖片
-            self.img_path = new_img_path
-            self.image = Image.open(self.img_path)
-            self.photo = ImageTk.PhotoImage(self.image)
-            self.label.config(image=self.photo)  # 切換顯示的圖片
-
-            # 將圖片路徑與時間戳等數據寫入CSV
-            self.write_to_csv(self.img_path)
-
-    def write_to_csv(self, img_path):
-        # 這裡可以自定義要寫入的數據
-        data = {
-            '圖片路徑': img_path,
-            '時間戳': '2024-11-27 15:30:00',  # 這裡可以根據需要自動生成或手動設定時間
-            '其他數據': 'Sample Data'
-        }
     # ======= 工具方法 =======
     def get_date_values(self, name):
         return self.frame0_data[name].dropna().unique().tolist()
