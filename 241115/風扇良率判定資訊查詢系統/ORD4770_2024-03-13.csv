@@ -1,3 +1,0 @@
-Date,OrderID,Product,Quantity,Factory,Workstation,ManufacturerID,ManufacturerNameID,QualityControlID,QualityNameID,TeamLeaderID,TeamNameID
-2024-03-13,ORD4770,Camera,844,CH2,請選擇工站,ID_1007,製造者3,ID_1008,品保員3,ID_1003,組長2
-2024-03-13,ORD4770,Camera,844,CH2,請選擇工站,ID_1007,製造者3,ID_1008,品保員3,ID_1003,組長2
