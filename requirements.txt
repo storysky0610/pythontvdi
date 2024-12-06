@@ -8,3 +8,4 @@ pandas
 matplotlib
 pydantic
 psycopg2-binary
+Flask-WTF
