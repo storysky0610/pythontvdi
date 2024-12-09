@@ -47,7 +47,7 @@ def update_graph(country_value,radio_value):
 
 @callback(
     Output('datatable','data'),
-
+    Output('datatable','columns'),
     Input('dropdown-selection','value')
 )
 
