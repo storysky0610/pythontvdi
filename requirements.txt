@@ -11,3 +11,4 @@ psycopg2-binary
 Flask-WTF
 dash
 plotly
+dash-mantine-components

@@ -48,13 +48,25 @@ def update_graph(country_value,radio_value):
 @callback(
     Output('datatable','data'),
     Output('datatable','columns'),
-    Input('dropdown-selection','value')
+    Input('dropdown-selection','value'),
+    Input('radio_item','value')
 )
 
 
-def update_graph(value):
-    dff = df[df.country == value]
-    return dff.to_dict('records')
+def update_graph(countey_value,radio_value):
+    dff = df[df.country == countey_value]
+    columns = [
+        {'id':'county','name':'county'},
+        {'id':'year','name':'year'}
+        
+    ]
+    if radio_value == 'pop':
+        columns.append({'id':'pop','name':'pop'})
+    elif radio_value == 'lifeExp':
+        columns.append({'id':'lifeExp','name':'lifeExp'})
+    elif radio_value == 'gdpPercap':
+        columns.append({'id':'gdpPercap','name':'gdpPercap'})
 
+    return dff.to_dict('records'),columns
 if __name__ == '__main__':
     app.run(debug=True)
