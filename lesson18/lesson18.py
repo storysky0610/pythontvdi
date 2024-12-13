@@ -68,3 +68,4 @@ def success():
 
 if __name__ == "__main__":
     run_simple("localhost", 8080, application,use_debugger=True,use_reloader=True)
+    postgresql://tvdi_postgre_user:GRyXeceTFsVQAjMInVbFg5Y3w4jXIXiA@dpg-ct01m6d6l47c73847gng-a/tvdi_postgre
