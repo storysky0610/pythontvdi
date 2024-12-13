@@ -5,9 +5,10 @@ import dash_mantine_components as dmc
 from dash_iconify import DashIconify
 _dash_renderer._set_react_version("18.2.0")
 
+
 df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/gapminder_unfiltered.csv')
 
-app = Dash(__name__,external_stylesheets=dmc.styles.ALL)
+app1 = Dash(__name__,external_stylesheets=dmc.styles.ALL,requests_pathname_prefix="/dash/")
 
 #radio button要顯示的資料
 radio_data = [['pop','人口'],['lifeExp','平均壽命'],['gdpPercap','人均gdp']]
@@ -17,14 +18,21 @@ selected_data = [{'value':value,'label':value} for value in df.country.unique()]
 
 
 
-app.layout = dmc.MantineProvider(
+app1.layout = dmc.MantineProvider(
     dmc.AppShell(
         children=[
             dmc.AppShellHeader(
                 dmc.NavLink(
                 label="職能發展學院",
-                leftSection=DashIconify(icon="clarity:date-line", height=16),
-                )   
+                leftSection=DashIconify(icon="tabler:gauge"),
+                active=True,
+                variant="filled",
+                color="orange",
+                id="navlink-interactive",
+                h=70,
+                href='/',
+                refresh=True
+                ),
             ),
             dmc.AppShellMain(
             [  
@@ -187,4 +195,4 @@ def update_table(country_value,radio_value):
     
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app1.run(debug=True)
