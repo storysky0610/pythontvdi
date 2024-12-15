@@ -3,6 +3,7 @@ from dash import Dash, _dash_renderer
 from dash import html, Output, Input, callback
 import pandas as pd
 from dash_iconify import DashIconify
+import os
 _dash_renderer._set_react_version("18.2.0")
 
 app = Dash(external_stylesheets=dmc.styles.ALL)
@@ -227,4 +228,6 @@ def choose_framework(R_value,D_Value):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # 使用 Render 提供的埠號，若不存在則預設為 8050
+    port = int(os.environ.get("PORT", 8050))
+    app.run(debug=True, host="0.0.0.0", port=port)
