@@ -27,7 +27,7 @@ app.layout = dmc.MantineProvider(
                     leftSection=DashIconify(icon="tabler:gauge"),
                     active=True,
                     variant="filled",
-                    color="blue",
+                    color="orange",
                     id="school_icon",
                     h=70,
                     href='/',
@@ -94,6 +94,7 @@ app.layout = dmc.MantineProvider(
     ],
     header={"height": 70},
     padding="xl",    
+    style={}
 
 )
 )
@@ -229,7 +230,7 @@ def choose_framework(R_value,D_Value):
 
         return                     dmc.Text(
                         [
-                            dmc.Mark("這是一個基於 Dash 和 Mantine Components 的前端應用程式，用於實現風扇良率判定及相關資料查詢系統。"),                            
+                            dmc.Mark("這是一個基於 'Dash' 和 'Mantine Components' 的前端應用程式，用於實現風扇良率判定及相關資料查詢系統。"),                            
                             dmc.Space(h=20),
                             dmc.Text("功能簡介", fw=900,size="xl"),
                             dmc.Text('1.多模式選擇查詢', fw=700),
