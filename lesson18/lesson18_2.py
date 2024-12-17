@@ -5,7 +5,6 @@ import dash_mantine_components as dmc
 from dash_iconify import DashIconify
 _dash_renderer._set_react_version("18.2.0")
 
-
 df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/gapminder_unfiltered.csv')
 
 app1 = Dash(__name__,external_stylesheets=dmc.styles.ALL,requests_pathname_prefix="/dash/")
@@ -20,20 +19,23 @@ selected_data = [{'value':value,'label':value} for value in df.country.unique()]
 
 app1.layout = dmc.MantineProvider(
     dmc.AppShell(
-        children=[
+        children=
+        [
             dmc.AppShellHeader(
                 dmc.NavLink(
-                label="職能發展學院",
-                leftSection=DashIconify(icon="tabler:gauge"),
-                active=True,
-                variant="filled",
-                color="orange",
-                id="navlink-interactive",
-                h=70,
-                href='/',
-                refresh=True
+                    label="職能發展學院",
+                    leftSection=DashIconify(icon="tabler:gauge"),
+                    active=True,
+                    variant="filled",
+                    color="blue",
+                    id="school_icon",
+                    h=70,
+                    href='/',
+                    refresh=True                                    
                 ),
-            ),
+                h=70                
+            )
+        ,
             dmc.AppShellMain(
             [  
                 dmc.Container(        
@@ -73,7 +75,7 @@ app1.layout = dmc.MantineProvider(
                         )
                     ,
                         
-                        #dash_table.DataTable(data=[],page_size=10,id='datatable',columns=[])
+                        
                         dmc.ScrollArea(
                             children=[],
                             h=300,
@@ -90,11 +92,7 @@ app1.layout = dmc.MantineProvider(
                     justify={"base": "center"},
                 )
             ,
-                #dcc.Graph(id='graph-content')
-                # dmc.Container(
-                #    dcc.Graph(id='graph-content') 
-                # )
-            
+                        
                 dmc.Container(
                 dmc.LineChart(
                     id = 'lineChart',
@@ -117,7 +115,7 @@ app1.layout = dmc.MantineProvider(
             
             ),
         ],
-        header={"height": 70,"backgroundColor":'blue'},
+        header={'height':70}
     )
     
 )

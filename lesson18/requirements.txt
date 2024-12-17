@@ -9,4 +9,4 @@ dash
 pandas
 plotly
 dash-mantine-components
-dash_iconify
+dash-iconify

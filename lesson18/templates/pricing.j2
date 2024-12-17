@@ -1,22 +1,20 @@
 {% extends "_base.j2" %}
-{% block title %}導覽{% endblock %}
+{% block title %}價格{% endblock %}
 
 {% block head %} {{super()}} {% endblock%}
 
 {% block main %}
 <div class="container">
-    <div class="row">
+    <div class="row g-5">
 
         {% for item in items_on_page%}
         <div class="col-4">
             <div class="card" style="width: 18rem;">
                 <img src="{{url_for('static',filename='images/cityImage/'+item['image'])}}" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <h6 class="card-text">{{item['city_name']}}</h6>
-                    <h6 class="card-text">國家:{{item['country']}}</h6>
-                    <h6 class="card-text">{{item['continent']}}</h6>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <h4 class="card-title">{{item['city_name']}}</h5>
+                    <h6 class="card-title">國家:{{item['country']}}</h6>
+                    <h6 class="card-title">{{item['continent']}}</h6>    
                 </div>
             </div>
         </div>
